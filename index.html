@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend Mentor | E-commerce product page</title>
+  </head>
+  <body>
+    <!-- Mobile-first header -->
+    <header class="site-header">
+      <button
+        class="menu-toggle"
+        aria-label="Open menu"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+      >
+        <img src="./images/icon-menu.svg" alt="Menu" />
+      </button>
+
+      <img class="logo" src="./images/logo.svg" alt="Sneaker Company" />
+
+      <!-- Mobile overlay menu -->
+      <nav id="mobile-menu" class="mobile-menu" aria-hidden="true">
+        <div class="mobile-menu__inner">
+          <button class="mobile-menu__close" aria-label="Close menu">
+            <img src="./images/icon-close.svg" alt="Close" />
+          </button>
+          <ul class="mobile-menu__list">
+            <li><a href="#">Collections</a></li>
+            <li><a href="#">Men</a></li>
+            <li><a href="#">Women</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <button class="cart-button" aria-label="Open cart">
+          <img src="./images/icon-cart.svg" alt="Cart" />
+        </button>
+        <img class="avatar" src="./images/image-avatar.png" alt="User avatar" />
+      </div>
+    </header>
+
+    <main class="page-container">
+      <section class="product">
+        <h1 class="sr-only">Product</h1>
+        <p class="brand">Sneaker Company</p>
+        <h2 class="product-title">Fall Limited Edition Sneakers</h2>
+        <p class="product-desc">
+          These low-profile sneakers are your perfect casual wear companion.
+          Featuring a durable rubber outer sole, they’ll withstand everything
+          the weather can offer.
+        </p>
+
+        <div class="product-pricing">
+          <span class="price">$125.00</span>
+          <span class="discount">50%</span>
+          <span class="original">$250.00</span>
+        </div>
+
+        <div class="add-to-cart">
+          <label for="qty" class="sr-only">Quantity</label>
+          <input
+            id="qty"
+            type="number"
+            value="0"
+            min="0"
+            aria-label="Product quantity"
+          />
+          <button class="add-button">Add to cart</button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
