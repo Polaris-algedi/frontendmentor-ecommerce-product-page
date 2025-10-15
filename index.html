@@ -40,11 +40,11 @@
         <button class="cart-button" aria-label="Open cart">
           <img src="./images/icon-cart.svg" alt="Cart" />
         </button>
-        <div class="cart-dropdown" aria-live="polite" aria-atomic="true">
+        <div class="cart-dropdown" aria-live="polite" aria-atomic="true" hidden>
           <div class="cart-dropdown__inner">
             <h2 class="cart-dropdown__title">Cart</h2>
             <div class="cart-dropdown__content">
-              <p class="cart-empty">Your cart is empty.</p>
+              <p class="cart-empty" hidden>Your cart is empty.</p>
               <div class="cart-item">
                 <img
                   class="cart-item__image"
@@ -63,8 +63,11 @@
                 </button>
               </div>
             </div>
+
+            <div class="cart-dropdown__footer">
+              <button class="checkout-button">Checkout</button>
+            </div>
           </div>
-          <button class="checkout-button">Checkout</button>
         </div>
         <img class="avatar" src="./images/image-avatar.png" alt="User avatar" />
       </div>
@@ -118,23 +121,25 @@
             </button>
           </div>
         </div>
-        <p class="brand">Sneaker Company</p>
-        <h2 class="product-title">Fall Limited Edition Sneakers</h2>
-        <p class="product-desc">
-          These low-profile sneakers are your perfect casual wear companion.
-          Featuring a durable rubber outer sole, they’ll withstand everything
-          the weather can offer.
-        </p>
+        <div class="product-details">
+          <p class="brand">Sneaker Company</p>
+          <h2 class="product-title">Fall Limited Edition Sneakers</h2>
+          <p class="product-desc">
+            These low-profile sneakers are your perfect casual wear companion.
+            Featuring a durable rubber outer sole, they’ll withstand everything
+            the weather can offer.
+          </p>
 
-        <p class="product-pricing" aria-label="Price information">
-          <strong class="price">
-            <data value="125.00" aria-label="Current price">$125.00</data>
-          </strong>
-          <span class="discount" aria-label="Discount percentage">50%</span>
-          <del class="original" aria-label="Original price">
-            <data value="250.00">$250.00</data>
-          </del>
-        </p>
+          <p class="product-pricing" aria-label="Price information">
+            <strong class="price">
+              <data value="125.00" aria-label="Current price">$125.00</data>
+            </strong>
+            <span class="discount" aria-label="Discount percentage">50%</span>
+            <del class="original" aria-label="Original price">
+              <data value="250.00">$250.00</data>
+            </del>
+          </p>
+        </div>
 
         <div class="product-actions">
           <div
