@@ -40,32 +40,34 @@
         <button class="cart-button" aria-label="Open cart">
           <img src="./images/icon-cart.svg" alt="Cart" />
         </button>
-        <div class="cart-dropdown" aria-live="polite" aria-atomic="true" hidden>
+        <div class="cart-dropdown hidden" aria-live="polite" aria-atomic="true">
           <div class="cart-dropdown__inner">
             <h2 class="cart-dropdown__title">Cart</h2>
             <div class="cart-dropdown__content">
-              <p class="cart-empty" hidden>Your cart is empty.</p>
-              <div class="cart-item">
-                <img
-                  class="cart-item__image"
-                  src="./images/image-product-1-thumbnail.jpg"
-                  alt="Fall Limited Edition Sneakers"
-                />
-                <div class="cart-item__details">
-                  <p class="cart-item__name">Fall Limited Edition Sneakers</p>
-                  <p class="cart-item__pricing">
-                    $125.00 x <span class="cart-item__quantity">3</span>
-                    <strong class="cart-item__total">$375.00</strong>
-                  </p>
+              <p class="cart-empty">Your cart is empty.</p>
+              <div class="cart-items hidden">
+                <div class="cart-item">
+                  <img
+                    class="cart-item__image"
+                    src="./images/image-product-1-thumbnail.jpg"
+                    alt="Fall Limited Edition Sneakers"
+                  />
+                  <div class="cart-item__details">
+                    <p class="cart-item__name">Fall Limited Edition Sneakers</p>
+                    <p class="cart-item__pricing">
+                      $125.00 x <span class="cart-item__quantity">3</span>
+                      <strong class="cart-item__total">$375.00</strong>
+                    </p>
+                  </div>
+                  <button class="cart-item__remove" aria-label="Remove item">
+                    <img src="./images/icon-delete.svg" alt="Delete" />
+                  </button>
                 </div>
-                <button class="cart-item__remove" aria-label="Remove item">
-                  <img src="./images/icon-delete.svg" alt="Delete" />
-                </button>
-              </div>
-            </div>
 
-            <div class="cart-dropdown__footer">
-              <button class="checkout-button">Checkout</button>
+                <div class="cart-dropdown__footer">
+                  <button class="checkout-button">Checkout</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -91,9 +93,9 @@
             </button>
           </div>
           <div class="product-thumbnails">
-            <button class="thumbnail-button">
+            <button class="thumbnail-button selected_thumbnail">
               <img
-                class="thumbnail-image"
+                class="thumbnail-image selected_img"
                 src="./images/image-product-1-thumbnail.jpg"
                 alt="Fall Limited Edition Sneakers thumbnail 1"
               />
@@ -140,9 +142,9 @@
             </button>
           </div>
           <div class="product-thumbnails">
-            <button class="thumbnail-button">
+            <button class="thumbnail-button selected_thumbnail">
               <img
-                class="thumbnail-image"
+                class="thumbnail-image selected_img"
                 src="./images/image-product-1-thumbnail.jpg"
                 alt="Fall Limited Edition Sneakers thumbnail 1"
               />
@@ -196,14 +198,14 @@
             role="group"
             aria-label="Select quantity"
           >
-            <button class="minus-button">
+            <button class="quantity-decrement">
               <span class="sr-only">Decrease quantity</span>
               <img src="./images/icon-minus.svg" alt="Minus" />
             </button>
-            <span class="product-quantity" aria-live="polite" aria-atomic="true"
+            <span class="quantity-display" aria-live="polite" aria-atomic="true"
               >0</span
             >
-            <button class="plus-button">
+            <button class="quantity-increment">
               <span class="sr-only">Increase quantity</span>
               <img src="./images/icon-plus.svg" alt="Plus" />
             </button>
