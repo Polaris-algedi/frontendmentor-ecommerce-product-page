@@ -44,14 +44,16 @@ if (menuClose && mobileMenu) {
 // Lightbox functionality
 const lightbox = document.getElementById("lightbox");
 const lightboxClose = document.querySelector(".lightbox__close");
-const productImage = document.querySelector(".product-image");
-const lightboxOverlay = document.querySelector(".lightbox__overlay");
+const productImage = document.querySelector(".product-image"); // Select the first product image.
 
 if (productImage && lightbox) {
   productImage.addEventListener("click", () => {
-    lightbox.classList.add("lightbox-active");
-    lightbox.classList.remove("hidden");
-    lightbox.setAttribute("aria-hidden", "false");
+    if (window.innerWidth >= 1280) {
+      // Don't show lightbox on mobile
+      lightbox.classList.add("lightbox-active");
+      lightbox.classList.remove("hidden");
+      lightbox.setAttribute("aria-hidden", "false");
+    }
   });
 }
 
@@ -104,9 +106,10 @@ lightboxThumbnailImgs.forEach((thumbnail) => {
 });
 
 // Next and previous buttons for lightbox
-const lightboxMainImage = document.querySelector(".lightbox-main-image");
-const nextButton = document.querySelector(".lightbox__next");
-const prevButton = document.querySelector(".lightbox__prev");
+const lightboxNextButton = document.querySelector(".lightbox__next");
+const lightboxPrevButton = document.querySelector(".lightbox__prev");
+const mobilePrevButton = document.querySelector(".mobile__prev");
+const mobileNextButton = document.querySelector(".mobile__next");
 
 const updateLightboxImage = (index) => {
   const newSrc = product.images[index];
@@ -151,24 +154,37 @@ const updateLightboxThumbnailActiveState = (index) => {
   });
 };
 
-if (nextButton) {
-  nextButton.addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % product.images.length;
-    updateLightboxImage(currentIndex);
-    updateThumbnailActiveState(currentIndex);
-    updateLightboxThumbnailActiveState(currentIndex);
-  });
+//
+// Calculation functions
+function getNextIndex(currentIndex, totalItems) {
+  return (currentIndex + 1) % totalItems;
 }
 
-if (prevButton) {
-  prevButton.addEventListener("click", () => {
-    currentIndex =
-      (currentIndex - 1 + product.images.length) % product.images.length;
-    updateLightboxImage(currentIndex);
-    updateThumbnailActiveState(currentIndex);
-    updateLightboxThumbnailActiveState(currentIndex);
-  });
+function getPrevIndex(currentIndex, totalItems) {
+  return (currentIndex - 1 + totalItems) % totalItems;
 }
+
+function updateUI(index) {
+  updateLightboxImage(index);
+  updateThumbnailActiveState(index);
+  updateLightboxThumbnailActiveState(index);
+}
+
+// Main setup function
+function setupNavigation(button, calculateNewIndex) {
+  if (button) {
+    button.addEventListener("click", () => {
+      currentIndex = calculateNewIndex(currentIndex, product.images.length);
+      updateUI(currentIndex);
+    });
+  }
+}
+
+// Usage
+setupNavigation(lightboxNextButton, getNextIndex);
+setupNavigation(lightboxPrevButton, getPrevIndex);
+setupNavigation(mobileNextButton, getNextIndex);
+setupNavigation(mobilePrevButton, getPrevIndex);
 
 // Initialize lightbox image
 updateLightboxImage(currentIndex);
@@ -195,14 +211,23 @@ if (decrementButton && incrementButton && quantityDisplay) {
 }
 
 // Add to cart functionality
+const cartEmptyMessage = document.querySelector(".cart-empty-message");
+const cartItemsContainer = document.querySelector(".cart-items");
 const addToCartButton = document.querySelector(".add-to-cart-button");
-const cartCount = document.querySelector(".cart-count");
+const cartItemQuantity = document.querySelector(".cart-item__quantity");
+const cartItemTotal = document.querySelector(".cart-item__total");
 
-if (addToCartButton && cartCount) {
+if (addToCartButton && cartItemQuantity) {
   addToCartButton.addEventListener("click", () => {
     if (quantity > 0) {
-      cartCount.textContent = quantity;
-      cartCount.classList.remove("hidden");
+      const totalPrice = (product.price * quantity).toFixed(2);
+      cartItemQuantity.textContent = quantity;
+      cartItemTotal.textContent = `$${totalPrice}`;
+      cartItemsContainer.classList.remove("hidden");
+      cartEmptyMessage.classList.add("hidden");
+    } else {
+      cartItemsContainer.classList.add("hidden");
+      cartEmptyMessage.classList.remove("hidden");
     }
   });
 }
@@ -216,5 +241,15 @@ if (cartIcon && cartDropdown) {
     const expanded = cartIcon.getAttribute("aria-expanded") === "true";
     cartIcon.setAttribute("aria-expanded", String(!expanded));
     cartDropdown.classList.toggle("hidden");
+  });
+}
+
+// Remove item from cart
+const cartItemRemove = document.querySelector(".cart-item__remove");
+
+if (cartItemRemove && cartItemsContainer && cartEmptyMessage) {
+  cartItemRemove.addEventListener("click", () => {
+    cartItemsContainer.classList.add("hidden");
+    cartEmptyMessage.classList.remove("hidden");
   });
 }
