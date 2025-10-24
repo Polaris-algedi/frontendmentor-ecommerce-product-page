@@ -44,7 +44,7 @@
           <div class="cart-dropdown__inner">
             <h2 class="cart-dropdown__title">Cart</h2>
             <div class="cart-dropdown__content">
-              <p class="cart-empty">Your cart is empty.</p>
+              <p class="cart-empty-message">Your cart is empty.</p>
               <div class="cart-items hidden">
                 <div class="cart-item">
                   <img
@@ -85,10 +85,10 @@
               src="./images/image-product-1.jpg"
               alt="Fall Limited Edition Sneakers"
             />
-            <button class="previous" aria-label="Previous image">
+            <button class="mobile__prev previous" aria-label="Previous image">
               <img src="./images/icon-previous.svg" alt="Previous" />
             </button>
-            <button class="next" aria-label="Next image">
+            <button class="mobile__next next" aria-label="Next image">
               <img src="./images/icon-next.svg" alt="Next" />
             </button>
           </div>
@@ -124,7 +124,7 @@
           </div>
         </div>
 
-        <div id="lightbox" class="product-images lightbox-active">
+        <div id="lightbox" class="product-images hidden">
           <button class="lightbox__close" aria-label="Close menu">
             <img src="./images/icon-close.svg" alt="Close" />
           </button>
@@ -210,7 +210,7 @@
               <img src="./images/icon-plus.svg" alt="Plus" />
             </button>
           </div>
-          <button class="cart-add-button">
+          <button class="add-to-cart-button">
             <img
               src="./images/icon-cart.svg"
               alt="cart icon"
