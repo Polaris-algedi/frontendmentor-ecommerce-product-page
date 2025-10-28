@@ -161,7 +161,7 @@ img {
   position: relative;
 }
 
-.site-header .menu-toggle {
+.site-header .mobile-menu__open {
   background: none;
   border: 0;
   padding: 0;
@@ -497,7 +497,7 @@ img {
     border-bottom: 1px solid var(--grayish-blue);
   }
 
-  .menu-toggle {
+  .mobile-menu__open {
     display: none;
   }
 
