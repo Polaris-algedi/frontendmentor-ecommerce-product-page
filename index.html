@@ -37,10 +37,15 @@
       </nav>
 
       <div class="header-actions">
-        <button class="cart-button" aria-label="Open cart">
-          <img src="./images/icon-cart.svg" alt="Cart" />
+        <button
+          class="cart-button"
+          aria-label="Open cart"
+          aria-expanded="false"
+          aria-controls="cart-dropdown"
+        >
+          <img src="./images/icon-cart.svg" alt="" />
         </button>
-        <div class="cart-dropdown hidden" aria-live="polite" aria-atomic="true">
+        <div id="cart-dropdown" class="cart-dropdown hidden">
           <div class="cart-dropdown__inner">
             <h2 class="cart-dropdown__title">Cart</h2>
             <div class="cart-dropdown__content">
@@ -50,17 +55,20 @@
                   <img
                     class="cart-item__image"
                     src="./images/image-product-1-thumbnail.jpg"
-                    alt="Fall Limited Edition Sneakers"
+                    alt=""
+                    aria-labelledby="cart-item__name"
                   />
                   <div class="cart-item__details">
-                    <p class="cart-item__name">Fall Limited Edition Sneakers</p>
+                    <p id="cart-item__name" class="cart-item__name">
+                      Fall Limited Edition Sneakers
+                    </p>
                     <p class="cart-item__pricing">
                       $125.00 x <span class="cart-item__quantity">3</span>
                       <strong class="cart-item__total">$375.00</strong>
                     </p>
                   </div>
                   <button class="cart-item__remove" aria-label="Remove item">
-                    <img src="./images/icon-delete.svg" alt="Delete" />
+                    <img src="./images/icon-delete.svg" alt="" />
                   </button>
                 </div>
 
