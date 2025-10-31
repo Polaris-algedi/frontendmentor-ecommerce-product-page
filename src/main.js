@@ -20,7 +20,8 @@ const product = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Mobile menu toggle
+  // ====== ---------------------------------------Mobile Menu Start--------------------------------------- ======
+
   const menuOpen = document.querySelector(".mobile-menu__open");
   const mobileMenu = document.getElementById("mobile-menu");
   const menuClose = document.querySelector(".mobile-menu__close");
@@ -36,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize ARIA state
   mobileMenu.setAttribute("aria-hidden", isMobileMode ? "true" : "false");
 
-  // === Define handlers once ===
+  // Define handlers once
   function openMenu() {
     if (!isMobileMode) return; // Safety guard
     menuOpen.setAttribute("aria-expanded", "true");
@@ -63,12 +64,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // === Add listeners ONCE ===
+  // Add listeners ONCE
   menuOpen.addEventListener("click", openMenu);
   menuClose.addEventListener("click", closeMenu);
   document.addEventListener("keydown", handleKeyDown);
 
-  // === Respond to resize ===
+  // Respond to resize
   const mediaQuery = window.matchMedia("(max-width: 1279px)");
   function handleViewportChange(e) {
     isMobileMode = e.matches;
@@ -89,6 +90,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize and listen
   handleViewportChange(mediaQuery);
   mediaQuery.addEventListener("change", handleViewportChange);
+
+  // ====== ---------------------------------------Mobile Menu End--------------------------------------- ======
 
   // Lightbox functionality
   const lightbox = document.getElementById("lightbox");
@@ -240,6 +243,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialize lightbox image
   updateLightboxImage(currentIndex);
 
+  // ====== ---------------------------------------Cart Logic Start--------------------------------------- ======
+
   // Quantity selector
   const decrementButton = document.querySelector(".quantity-decrement");
   const incrementButton = document.querySelector(".quantity-increment");
@@ -283,15 +288,35 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Cart toggle
+  // Cart dropdown
   const cartIcon = document.querySelector(".cart-button");
   const cartDropdown = document.querySelector(".cart-dropdown");
 
   if (cartIcon && cartDropdown) {
     cartIcon.addEventListener("click", () => {
       const expanded = cartIcon.getAttribute("aria-expanded") === "true";
-      cartIcon.setAttribute("aria-expanded", String(!expanded));
-      cartDropdown.classList.toggle("hidden");
+      const isOpening = !expanded;
+
+      cartIcon.setAttribute("aria-expanded", String(isOpening));
+      cartDropdown.classList.toggle("hidden", !isOpening);
+
+      if (isOpening) {
+        // Move focus to the cart heading (make it focusable)
+        const title = cartDropdown.querySelector(".cart-dropdown__title");
+        title.setAttribute("tabindex", "-1"); // makes it focusable but not tabbable
+        title.focus();
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (
+        e.key === "Escape" &&
+        cartDropdown.classList.contains("hidden") === false
+      ) {
+        cartIcon.setAttribute("aria-expanded", "false");
+        cartDropdown.classList.add("hidden");
+        cartIcon.focus();
+      }
     });
   }
 
@@ -305,3 +330,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// ====== ---------------------------------------Cart Logic End--------------------------------------- ======
