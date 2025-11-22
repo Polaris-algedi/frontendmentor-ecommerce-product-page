@@ -20,6 +20,75 @@ const product = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  // ====== ---------------------------------------Focus Trap Start--------------------------------------- ======
+  class FocusTrap {
+    constructor(element) {
+      this.element = element;
+      this.focusableElements = [
+        "button",
+        "a",
+        "input",
+        "select",
+        "textarea",
+        '[tabindex]:not([tabindex="-1"])',
+      ].join(",");
+      // store bound handler so removeEventListener can match it
+      this._boundTrapFocus = null;
+    }
+
+    getFocusableElements() {
+      const focusable = this.element.querySelectorAll(this.focusableElements);
+      return Array.from(focusable).filter((el) => {
+        return (
+          !el.hasAttribute("disabled") &&
+          !el.getAttribute("aria-hidden") &&
+          el.offsetParent !== null
+        ); // Not visually hidden
+      });
+    }
+
+    trapFocus(e) {
+      const focusable = this.getFocusableElements();
+      const firstElement = focusable[0];
+      const lastElement = focusable[focusable.length - 1];
+
+      if (e.key === "Tab") {
+        if (e.shiftKey) {
+          // Shift + Tab
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          // Tab
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    }
+
+    activate() {
+      const focusable = this.getFocusableElements();
+      if (focusable.length > 0) {
+        focusable[0].focus();
+      }
+
+      // bind once and keep reference for removal
+      this._boundTrapFocus = this.trapFocus.bind(this);
+      this.element.addEventListener("keydown", this._boundTrapFocus);
+    }
+
+    deactivate() {
+      if (this._boundTrapFocus) {
+        this.element.removeEventListener("keydown", this._boundTrapFocus);
+        this._boundTrapFocus = null;
+      }
+    }
+  }
+  let focusTrap = null;
+  // ====== ---------------------------------------Focus Trap End--------------------------------------- ======
   // ====== ---------------------------------------Mobile Menu Start--------------------------------------- ======
 
   const menuOpen = document.querySelector(".mobile-menu__open");
@@ -44,6 +113,9 @@ document.addEventListener("DOMContentLoaded", () => {
     mobileMenu.setAttribute("aria-hidden", "false");
     mobileMenu.classList.add("open");
     menuClose.focus();
+    focusTrap = new FocusTrap(mobileMenu);
+    focusTrap.activate();
+    document.body.style.overflow = "hidden"; // Prevent background scrolling
   }
 
   function closeMenu() {
@@ -52,6 +124,11 @@ document.addEventListener("DOMContentLoaded", () => {
     mobileMenu.setAttribute("aria-hidden", "true");
     mobileMenu.classList.remove("open");
     menuOpen.focus();
+    if (focusTrap) {
+      focusTrap.deactivate();
+      focusTrap = null;
+    }
+    document.body.style.overflow = "auto"; // Allow background scrolling
   }
 
   function handleKeyDown(e) {
@@ -84,6 +161,12 @@ document.addEventListener("DOMContentLoaded", () => {
       mobileMenu.removeAttribute("aria-hidden");
       mobileMenu.classList.remove("open"); // hide visually
       menuOpen.setAttribute("aria-expanded", "false");
+      // If a focus trap is active (from mobile), deactivate it so focus is not trapped on desktop
+      if (focusTrap) {
+        focusTrap.deactivate();
+        focusTrap = null;
+      }
+      document.body.style.overflow = "auto";
     }
   }
 
@@ -93,29 +176,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ====== ---------------------------------------Mobile Menu End--------------------------------------- ======
 
-  // Lightbox functionality
+  // ====== ---------------------------------------Lightbox functionality Start--------------------------------------- ======
   const lightbox = document.getElementById("lightbox");
   const lightboxClose = document.querySelector(".lightbox__close");
-  const productImage = document.querySelector(".product-image"); // Select the first product image.
+  const lightboxTrigger = document.querySelector(".lightbox-trigger"); // Select the first product image.
 
-  if (productImage && lightbox) {
-    productImage.addEventListener("click", () => {
-      if (window.innerWidth >= 1280) {
-        // Don't show lightbox on mobile
-        lightbox.classList.add("lightbox-active");
-        lightbox.classList.remove("hidden");
-        lightbox.setAttribute("aria-hidden", "false");
-      }
-    });
+  function openLightbox() {
+    lightbox.classList.add("lightbox-active");
+    lightbox.classList.remove("hidden");
+    lightbox.setAttribute("aria-hidden", "false");
+    lightboxClose.focus();
+    focusTrap = new FocusTrap(lightbox);
+    focusTrap.activate();
+
+    document.body.style.overflow = "hidden";
   }
-
-  if (lightboxClose && lightbox) {
-    lightboxClose.addEventListener("click", () => {
+  function closeLightbox(e) {
+    if (e.key === "Escape" || e.type === "click") {
       lightbox.classList.remove("lightbox-active");
       lightbox.classList.add("hidden");
       lightbox.setAttribute("aria-hidden", "true");
-    });
+      lightboxTrigger.focus();
+      if (focusTrap) {
+        focusTrap.deactivate();
+        focusTrap = null;
+      }
+      document.body.style.overflow = "auto";
+    }
   }
+
+  if (lightboxTrigger && lightbox && window.innerWidth >= 1280) {
+    // Don't show lightbox on mobile
+    lightboxTrigger.addEventListener("click", openLightbox);
+  }
+
+  if (lightboxClose && lightbox) {
+    lightboxClose.addEventListener("click", closeLightbox);
+  }
+
+  document.addEventListener("keydown", closeLightbox);
 
   // Thumbnail click to change main image
   const productImages = document.querySelector(".product-images");
@@ -131,9 +230,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let currentIndex = 0;
 
-  productThumbnailImgs.forEach((thumbnail) => {
+  productThumbnailButtons.forEach((thumbnail) => {
     thumbnail.addEventListener("click", () => {
-      const newSrc = thumbnail.getAttribute("src").replace("-thumbnail", "");
+      const newSrc = thumbnail
+        .querySelector("img")
+        .getAttribute("src")
+        .replace("-thumbnail", "");
       currentIndex = product.images.indexOf(newSrc);
       if (mainImages && newSrc) {
         mainImages.forEach((img) => {
@@ -145,9 +247,12 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  lightboxThumbnailImgs.forEach((thumbnail) => {
+  lightboxThumbnailButtons.forEach((thumbnail) => {
     thumbnail.addEventListener("click", () => {
-      const newSrc = thumbnail.getAttribute("src").replace("-thumbnail", "");
+      const newSrc = thumbnail
+        .querySelector("img")
+        .getAttribute("src")
+        .replace("-thumbnail", "");
       currentIndex = product.images.indexOf(newSrc);
       if (mainImages && newSrc) {
         mainImages.forEach((img) => {
@@ -242,6 +347,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize lightbox image
   updateLightboxImage(currentIndex);
+  // ====== ---------------------------------------Lightbox functionality End--------------------------------------- ======
 
   // ====== ---------------------------------------Cart Logic Start--------------------------------------- ======
 
