@@ -10,6 +10,7 @@
     <!-- Mobile-first header -->
     <header class="site-header">
       <button
+        type="button"
         class="mobile-menu__open"
         aria-label="Open menu"
         aria-controls="mobile-menu"
@@ -23,7 +24,11 @@
       <!-- Mobile overlay menu -->
       <nav id="mobile-menu" class="mobile-menu">
         <div class="mobile-menu__inner">
-          <button class="mobile-menu__close" aria-label="Close menu">
+          <button
+            type="button"
+            class="mobile-menu__close"
+            aria-label="Close menu"
+          >
             <img src="./images/icon-close.svg" alt="" />
           </button>
           <ul class="mobile-menu__list">
@@ -38,6 +43,7 @@
 
       <div class="header-actions">
         <button
+          type="button"
           class="cart-button"
           aria-label="Open cart"
           aria-expanded="false"
@@ -67,13 +73,19 @@
                       <strong class="cart-item__total">$375.00</strong>
                     </p>
                   </div>
-                  <button class="cart-item__remove" aria-label="Remove item">
+                  <button
+                    type="button"
+                    class="cart-item__remove"
+                    aria-label="Remove item"
+                  >
                     <img src="./images/icon-delete.svg" alt="" />
                   </button>
                 </div>
 
                 <div class="cart-dropdown__footer">
-                  <button class="checkout-button">Checkout</button>
+                  <button type="button" class="checkout-button">
+                    Checkout
+                  </button>
                 </div>
               </div>
             </div>
@@ -87,41 +99,55 @@
       <section class="product">
         <div class="product-images">
           <div class="main-product-image">
-            <img
-              class="product-image"
-              src="./images/image-product-1.jpg"
-              alt="Fall Limited Edition Sneakers"
-            />
-            <button class="mobile__prev previous" aria-label="Previous image">
+            <button
+              type="button"
+              class="lightbox-trigger"
+              aria-label="View enlarged image of Fall Limited Edition Sneakers"
+            >
+              <img
+                class="product-image"
+                src="./images/image-product-1.jpg"
+                alt="Fall Limited Edition Sneakers"
+              />
+            </button>
+            <button
+              type="button"
+              class="mobile__prev previous"
+              aria-label="Previous image"
+            >
               <img src="./images/icon-previous.svg" alt="Previous" />
             </button>
-            <button class="mobile__next next" aria-label="Next image">
+            <button
+              type="button"
+              class="mobile__next next"
+              aria-label="Next image"
+            >
               <img src="./images/icon-next.svg" alt="Next" />
             </button>
           </div>
           <div class="product-thumbnails">
-            <button class="thumbnail-button selected_thumbnail">
+            <button type="button" class="thumbnail-button selected_thumbnail">
               <img
                 class="thumbnail-image selected_img"
                 src="./images/image-product-1-thumbnail.jpg"
                 alt="Fall Limited Edition Sneakers thumbnail 1"
               />
             </button>
-            <button class="thumbnail-button">
+            <button type="button" class="thumbnail-button">
               <img
                 class="thumbnail-image"
                 src="./images/image-product-2-thumbnail.jpg"
                 alt="Fall Limited Edition Sneakers thumbnail 2"
               />
             </button>
-            <button class="thumbnail-button">
+            <button type="button" class="thumbnail-button">
               <img
                 class="thumbnail-image"
                 src="./images/image-product-3-thumbnail.jpg"
                 alt="Fall Limited Edition Sneakers thumbnail 3"
               />
             </button>
-            <button class="thumbnail-button">
+            <button type="button" class="thumbnail-button">
               <img
                 class="thumbnail-image"
                 src="./images/image-product-4-thumbnail.jpg"
@@ -132,7 +158,7 @@
         </div>
 
         <div id="lightbox" class="product-images hidden">
-          <button class="lightbox__close" aria-label="Close menu">
+          <button type="button" class="lightbox__close" aria-label="Close menu">
             <img src="./images/icon-close.svg" alt="Close" />
           </button>
           <div class="main-product-image">
@@ -141,36 +167,44 @@
               src="./images/image-product-1.jpg"
               alt="Fall Limited Edition Sneakers"
             />
-            <button class="lightbox__prev previous" aria-label="Previous image">
+            <button
+              type="button"
+              class="lightbox__prev previous"
+              aria-label="Previous image"
+            >
               <img src="./images/icon-previous.svg" alt="Previous" />
             </button>
-            <button class="lightbox__next next" aria-label="Next image">
+            <button
+              type="button"
+              class="lightbox__next next"
+              aria-label="Next image"
+            >
               <img src="./images/icon-next.svg" alt="Next" />
             </button>
           </div>
           <div class="product-thumbnails">
-            <button class="thumbnail-button selected_thumbnail">
+            <button type="button" class="thumbnail-button selected_thumbnail">
               <img
                 class="thumbnail-image selected_img"
                 src="./images/image-product-1-thumbnail.jpg"
                 alt="Fall Limited Edition Sneakers thumbnail 1"
               />
             </button>
-            <button class="thumbnail-button">
+            <button type="button" class="thumbnail-button">
               <img
                 class="thumbnail-image"
                 src="./images/image-product-2-thumbnail.jpg"
                 alt="Fall Limited Edition Sneakers thumbnail 2"
               />
             </button>
-            <button class="thumbnail-button">
+            <button type="button" class="thumbnail-button">
               <img
                 class="thumbnail-image"
                 src="./images/image-product-3-thumbnail.jpg"
                 alt="Fall Limited Edition Sneakers thumbnail 3"
               />
             </button>
-            <button class="thumbnail-button">
+            <button type="button" class="thumbnail-button">
               <img
                 class="thumbnail-image"
                 src="./images/image-product-4-thumbnail.jpg"
@@ -205,15 +239,23 @@
             role="group"
             aria-label="Quantity selector"
           >
-            <button class="quantity-decrement" aria-label="Decrease quantity">
+            <button
+              type="button"
+              class="quantity-decrement"
+              aria-label="Decrease quantity"
+            >
               <img src="./images/icon-minus.svg" alt="" />
             </button>
             <span class="quantity-display" aria-live="polite">0</span>
-            <button class="quantity-increment" aria-label="Increase quantity">
+            <button
+              type="button"
+              class="quantity-increment"
+              aria-label="Increase quantity"
+            >
               <img src="./images/icon-plus.svg" alt="" />
             </button>
           </div>
-          <button class="add-to-cart-button">
+          <button type="button" class="add-to-cart-button">
             <img
               src="./images/icon-cart.svg"
               alt="cart icon"
