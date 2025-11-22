@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.overflow = "hidden";
   }
   function closeLightbox(e) {
-    if (e.key === "Escape" || e.type === "click") {
+    if (e.key === "Escape" || e.type === "click" || e.type === "change") {
       lightbox.classList.remove("lightbox-active");
       lightbox.classList.add("hidden");
       lightbox.setAttribute("aria-hidden", "true");
@@ -205,10 +205,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  if (lightboxTrigger && lightbox && window.innerWidth >= 1280) {
-    // Don't show lightbox on mobile
-    lightboxTrigger.addEventListener("click", openLightbox);
+  function updateLightboxListener(e) {
+    if (lightboxTrigger && lightbox) {
+      if (mediaQuery.matches) {
+        // Mobile: remove listener if it exists
+        lightboxTrigger.removeEventListener("click", openLightbox);
+        closeLightbox(e); // Close lightbox if open
+      } else {
+        // Desktop: add listener (ensure it's not added multiple times)
+        lightboxTrigger.addEventListener("click", openLightbox);
+      }
+    }
   }
+  // Run on load
+  updateLightboxListener();
+
+  // Re-run on resize
+  mediaQuery.addEventListener("change", updateLightboxListener);
 
   if (lightboxClose && lightbox) {
     lightboxClose.addEventListener("click", closeLightbox);
