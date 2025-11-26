@@ -19,6 +19,10 @@
   --white: hsl(0, 0%, 100%);
   --black: hsl(0, 0%, 0%, 0.75);
 
+  /* Utility to prevent background scrolling when overlays are open */
+  .no-scroll {
+    overflow: hidden;
+  }
   /* Typography */
   --font-family: "Kumbh Sans", sans-serif;
   --font-weight-regular: 400;
@@ -190,6 +194,26 @@ img {
   cursor: pointer;
 }
 
+/* Cart quantity badge */
+.cart-qty {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+  min-width: 1.25rem;
+  height: 0.875rem;
+  padding: 0 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--orange);
+  color: var(--white);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--border-radius-full);
+  line-height: 1;
+  z-index: 60;
+}
+
 .header-actions .avatar {
   width: var(--avatar-size-mobile);
   height: var(--avatar-size-mobile);
@@ -251,7 +275,7 @@ img {
   background-color: var(--white);
   border-radius: var(--border-radius-small);
   box-shadow: var(--shadow-black);
-  margin-top: var(--spacing-4);
+  margin-block-start: var(--spacing-4);
   z-index: 50;
 }
 
@@ -665,6 +689,12 @@ img {
 
   .add-to-cart-button {
     box-shadow: none;
+  }
+
+  .lightbox-trigger {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    display: block;
   }
 
   /* Lightbox styles */

@@ -49,7 +49,8 @@
           aria-expanded="false"
           aria-controls="cart-dropdown"
         >
-          <img src="./images/icon-cart.svg" alt="" />
+          <img src="./images/icon-cart.svg" alt="Cart" />
+          <span class="cart-qty hidden" aria-hidden="true">0</span>
         </button>
         <div id="cart-dropdown" class="cart-dropdown hidden">
           <div class="cart-dropdown__inner">
@@ -222,12 +223,12 @@
             the weather can offer.
           </p>
 
-          <p class="product-pricing" aria-label="Price information">
+          <p class="product-pricing">
             <strong class="price">
-              <data value="125.00" aria-label="Current price">$125.00</data>
+              <data value="125.00">$125.00</data>
             </strong>
             <span class="discount" aria-label="Discount percentage">50%</span>
-            <del class="original" aria-label="Original price">
+            <del class="original">
               <data value="250.00">$250.00</data>
             </del>
           </p>
